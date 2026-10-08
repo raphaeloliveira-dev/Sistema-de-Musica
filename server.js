@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get('/artistas', (req, res) => {
+app.get("/artistas", (req, res) => {
     res.status(200).json(ARTISTAS);
 });
 
@@ -43,11 +43,45 @@ app.get("/artistas/:id", (req, res) => {
     res.status(200).json(artista);
 });
 
+app.post("/artistas", (req, res) => {
+    const { nome, genero, pais } = req.body;
+
+    const novoArtista = {
+        id: ARTISTAS.length + 1,
+        nome,
+        genero,
+        pais
+    };
+
+    ARTISTAS.push(novoArtista);
+
+    res.status(201).json(novoArtista);
+});
+
+app.put("/artistas/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const { nome, genero, pais } = req.body;
+
+    const artistaIndex = ARTISTAS.findIndex(a => a.id === id);
+
+    if (artistaIndex === -1) {
+        return res.status(404).json({
+            mensagem: "Artista não encontrado"
+        });
+    }
+
+    ARTISTAS[artistaIndex] = {
+        ...ARTISTAS[artistaIndex],
+        nome,
+        genero,
+        pais
+    };
+
+    res.status(200).json(ARTISTAS[artistaIndex]);
+});
+
 const PORT = 3000;
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
-
-
-
