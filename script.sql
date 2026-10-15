@@ -45,3 +45,18 @@ INSERT INTO musicas (titulo, duracao, album_id) VALUES
 SELECT * FROM artistas;
 SELECT * FROM albuns;
 SELECT * FROM musicas;
+
+DELETE FROM artistas WHERE id = 4;
+SELECT * FROM artistas; 
+
+UPDATE artistas
+SET nome = "Victor",
+genero = "Samba",
+pais = "Chile"
+WHERE id = 6
+
+SELECT musicas.id, musicas.titulo AS musica, musicas.duracao, albuns.titulo AS album,
+albuns.ano_lancamento, artistas.nome AS artista, artistas.genero, artistas.pais
+FROM musicas
+INNER JOIN albuns ON musicas.album_id = albuns.id
+INNER JOIN artistas ON albuns.artista_id = artistas.id;
